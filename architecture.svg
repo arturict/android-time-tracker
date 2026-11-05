@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1500" viewBox="0 0 1800 1500" role="img" aria-labelledby="title desc">
+<title id="title">Android Time Tracker architecture</title><desc id="desc">Kotlin app screens and a Glance home-screen widget share a transactional repository and Room over SQLite. Each press closes the previous interval and starts another at one timestamp. Tracking requires no background timer. A PC or LAN adapter is deferred.</desc>
+<rect width="1800" height="1500" fill="#F3F6FA"/>
+<defs><marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 1 L 11 6 L 0 11 z" fill="#657892"/></marker></defs>
+<rect x="25" y="25" width="1750" height="180" rx="25" fill="#14253E"/>
+<text x="60" y="66" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#92D9CF">ANDROID TIME TRACKER</text>
+<text x="60" y="128" font-family="Segoe UI,Arial,sans-serif" font-size="48" font-weight="700" fill="#FFFFFF">Simple actions. Durable time history.</text>
+<text x="60" y="173" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="400" fill="#D6E1EF">Kotlin + Jetpack Compose   /   Glance widget   /   Room + SQLite</text>
+<rect x="60" y="245" width="990" height="280" rx="20" fill="#FFFFFF" stroke="#CFD9E5" stroke-width="2"/>
+<text x="85" y="292" font-family="Segoe UI,Arial,sans-serif" font-size="26" font-weight="700" fill="#17283F">01   APP SCREENS</text>
+<rect x="85" y="320" width="293" height="176" rx="20" fill="#EDF8F5"/>
+<rect x="403" y="320" width="293" height="176" rx="20" fill="#EDF8F5"/>
+<rect x="721" y="320" width="304" height="176" rx="20" fill="#EDF8F5"/>
+<text x="105" y="363" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#165E55">Dashboard</text>
+<text x="105" y="400" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#304E58">All activity buttons</text>
+<text x="105" y="432" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#304E58">Calendar left / Create right</text>
+<text x="105" y="468" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#304E58">Safe bottom padding</text>
+<text x="423" y="363" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#165E55">Calendar</text>
+<text x="423" y="400" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#304E58">Day timeline</text>
+<text x="423" y="434" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#304E58">Edit starts + ends</text>
+<text x="423" y="468" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#304E58">Home shortcut</text>
+<text x="741" y="363" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#165E55">Button editor</text>
+<text x="741" y="400" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#304E58">Title + color + order</text>
+<text x="741" y="434" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#304E58">Archive keeps history</text>
+<text x="741" y="468" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#304E58">Home shortcut</text>
+<rect x="1090" y="245" width="650" height="280" rx="20" fill="#FFFFFF" stroke="#CFD9E5" stroke-width="2"/>
+<text x="1115" y="292" font-family="Segoe UI,Arial,sans-serif" font-size="26" font-weight="700" fill="#17283F">02   HOME-SCREEN WIDGET</text>
+<text x="1115" y="336" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="400" fill="#5B4C83">Glance / tracker buttons only</text>
+<rect x="1120" y="370" width="180" height="66" rx="13" fill="#19776A"/>
+<rect x="1317" y="370" width="180" height="66" rx="13" fill="#7254B8"/>
+<rect x="1514" y="370" width="196" height="66" rx="13" fill="#B6553C"/>
+<text x="1160" y="411" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#FFFFFF">Work</text>
+<text x="1352" y="411" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#FFFFFF">Travel</text>
+<text x="1560" y="411" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#FFFFFF">Rest</text>
+<text x="1115" y="490" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="400" fill="#5B4C83">Scroll / resize / no app launch</text>
+<polyline points="550,525 550,570 700,570 700,625" fill="none" stroke="#657892" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="1415,525 1415,570 1100,570 1100,625" fill="none" stroke="#657892" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="565" y="556" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#5C6E85">ViewModel actions</text>
+<text x="1160" y="556" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="400" fill="#5C6E85">ActionCallback</text>
+<rect x="60" y="625" width="380" height="220" rx="20" fill="#FFF6E5" stroke="#E7C987" stroke-width="2"/>
+<text x="85" y="674" font-family="Segoe UI,Arial,sans-serif" font-size="26" font-weight="700" fill="#705016">Boundary timestamp</text>
+<text x="85" y="718" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="400" fill="#705016">UTC instant</text>
+<text x="85" y="755" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="400" fill="#705016">Device zone + offset</text>
+<text x="85" y="805" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#705016">Read once per boundary</text>
+<polyline points="440,735 500,735" fill="none" stroke="#657892" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="500" y="625" width="800" height="220" rx="22" fill="#172E4B"/>
+<text x="535" y="681" font-family="Segoe UI,Arial,sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">03   TrackerRepository</text>
+<text x="535" y="725" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#97E1D3">Shared write path for app + widget</text>
+<text x="535" y="772" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="400" fill="#DFEAF6">Validate / serialize / one Room transaction</text>
+<text x="535" y="816" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="400" fill="#DFEAF6">Close previous at T + start next at T</text>
+<rect x="1360" y="625" width="380" height="220" rx="20" fill="#F8FAFD" stroke="#8B9AAF" stroke-width="2" stroke-dasharray="10 7"/>
+<text x="1385" y="674" font-family="Segoe UI,Arial,sans-serif" font-size="26" font-weight="700" fill="#536780">Future PC / LAN</text>
+<text x="1385" y="716" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#536780">Adapter through repository</text>
+<text x="1385" y="753" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#536780">Authenticated sync later</text>
+<text x="1385" y="805" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#536780">No service in v1</text>
+<polyline points="1360,735 1300,735" fill="none" stroke="#657892" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#arrow)"/>
+<polyline points="900,845 900,925" fill="none" stroke="#657892" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="930" y="888" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400" fill="#5C6E85">Atomic write / query</text>
+<rect x="500" y="925" width="800" height="240" rx="20" fill="#FFFFFF" stroke="#CFD9E5" stroke-width="2"/>
+<text x="530" y="977" font-family="Segoe UI,Arial,sans-serif" font-size="32" font-weight="700" fill="#17283F">04   Room DAO + SQLite</text>
+<rect x="530" y="1003" width="740" height="50" rx="10" fill="#EEF3F9"/>
+<text x="550" y="1036" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="700" fill="#17283F">activity</text>
+<text x="760" y="1035" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#425874">UUID / title / color / order / archived</text>
+<rect x="530" y="1065" width="740" height="50" rx="10" fill="#EEF3F9"/>
+<text x="550" y="1098" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="700" fill="#17283F">time_interval</text>
+<text x="760" y="1097" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#425874">UTC endpoints / zones / active marker</text>
+<text x="530" y="1152" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#425874">One open interval maximum / app-private database</text>
+<polyline points="500,805 470,805 470,1045 440,1045" fill="none" stroke="#657892" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="60" y="925" width="380" height="240" rx="20" fill="#E6F5EF" stroke="#A6D7C5" stroke-width="2"/>
+<text x="85" y="975" font-family="Segoe UI,Arial,sans-serif" font-size="26" font-weight="700" fill="#175D4C">After commit</text>
+<text x="85" y="1022" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#175D4C">App observes saved data</text>
+<text x="85" y="1063" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#175D4C">Refresh every widget</text>
+<text x="85" y="1120" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#175D4C">Show success feedback</text>
+<rect x="1360" y="925" width="380" height="240" rx="20" fill="#FFFFFF" stroke="#CFD9E5" stroke-width="2"/>
+<text x="1385" y="975" font-family="Segoe UI,Arial,sans-serif" font-size="26" font-weight="700" fill="#17283F">Idle by design</text>
+<text x="1385" y="1022" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#425874">No running timer</text>
+<text x="1385" y="1057" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#425874">No tracking service</text>
+<text x="1385" y="1092" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#425874">No periodic polling</text>
+<text x="1385" y="1127" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#425874">No GPS or wake lock</text>
+<rect x="60" y="1220" width="1680" height="230" rx="20" fill="#FFFFFF" stroke="#CFD9E5" stroke-width="2"/>
+<text x="90" y="1269" font-family="Segoe UI,Arial,sans-serif" font-size="29" font-weight="700" fill="#17283F">A press creates a boundary. Time passes without background ticking.</text>
+<text x="90" y="1307" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="400" fill="#536780">Pressing the same button again still starts a new interval. Illustrative sequence, not to scale.</text>
+<text x="120" y="1345" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#536780">09:00 / Work pressed</text>
+<text x="650" y="1345" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#536780">10:15 / Travel pressed</text>
+<text x="1180" y="1345" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="400" fill="#536780">10:30 / Travel pressed again</text>
+<rect x="120" y="1363" width="518" height="50" rx="10" fill="#19776A"/>
+<rect x="650" y="1363" width="518" height="50" rx="10" fill="#7254B8"/>
+<rect x="1180" y="1363" width="510" height="50" rx="10" fill="#7254B8"/>
+<text x="145" y="1395" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">Work  [09:00, 10:15)</text>
+<text x="675" y="1395" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">Travel  [10:15, 10:30)</text>
+<text x="1205" y="1395" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">Travel  [10:30, open)</text>
+<text x="60" y="1481" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#657892">PROPOSED ARCHITECTURE  /  2026-11-05</text>
+<text x="1190" y="1481" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#657892">Dashed connection = deferred integration</text>
+</svg>

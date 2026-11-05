@@ -1,0 +1,30 @@
+# Personal tracking data must never enter source control.
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+databases/
+device-data/
+captures/
+exports/
+*.hprof
+*.jks
+*.keystore
+keystore.properties
+local.properties
+.env
+.env.*
+# Local tools, Android/Gradle output and IDE state.
+.local-tools/
+.gradle/
+.kotlin/
+**/build/
+*.apk
+*.aab
+*.apks
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
