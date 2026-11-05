@@ -22,11 +22,15 @@ import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.*
-import androidx.glance.appwidget.lazy.LazyColumn
+import androidx.glance.appwidget.lazy.GridCells
+import androidx.glance.appwidget.lazy.LazyVerticalGrid
+import androidx.glance.appwidget.lazy.items
+import androidx.glance.LocalSize
+import androidx.glance.color.ColorProvider
+import androidx.glance.unit.ColorProvider as SolidColor
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
 import com.simonmettler.timetracker.TrackerApplication
 import com.simonmettler.timetracker.data.TrackerActivity
 import com.simonmettler.timetracker.model.TimeRules
@@ -36,6 +40,8 @@ import kotlinx.coroutines.flow.map
 val ActivityIdKey = ActionParameters.Key<String>("activity_id")
 
 class TrackerWidget : GlanceAppWidget() {
+    override val sizeMode: SizeMode = SizeMode.Exact
+
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val repository = (context.applicationContext as TrackerApplication).repository
         val initial = repository.widgetSnapshot()
@@ -48,25 +54,32 @@ class TrackerWidget : GlanceAppWidget() {
     }
 }
 
+private val WidgetSurface = ColorProvider(day = Color(0xF2F5F6F4), night = Color(0xF2171A1C))
+private val WidgetText = ColorProvider(day = Color(0xFF15191B), night = Color(0xFFE6E9E8))
+
 @Composable
 private fun WidgetButtons(activities: List<TrackerActivity>, activeId: String?) {
-    LazyColumn(GlanceModifier.fillMaxSize().padding(4.dp)) {
-        if (activities.isEmpty()) item {
-            Text("Create tracker buttons in Time Tracker first.", GlanceModifier.padding(16.dp), style = TextStyle(color = ColorProvider(Color(0xFF17283F))))
-        }
-        activities.forEach { activity ->
-            item {
-                Box(GlanceModifier.fillMaxWidth().padding(4.dp)) {
-                    Box(
-                        GlanceModifier.fillMaxWidth().background(ColorProvider(Color(activity.colorArgb)))
+    // Two columns once the widget is wide enough, so a 3x2 widget shows six buttons without scrolling.
+    val columns = if (LocalSize.current.width >= 240.dp) 2 else 1
+    Box(GlanceModifier.fillMaxSize().background(WidgetSurface).cornerRadius(24.dp).padding(6.dp)) {
+        if (activities.isEmpty()) {
+            Text("Create tracker buttons in Time Tracker first.", GlanceModifier.padding(16.dp), style = TextStyle(color = WidgetText, fontSize = 14.sp))
+        } else LazyVerticalGrid(GridCells.Fixed(columns), GlanceModifier.fillMaxSize()) {
+            items(activities, itemId = { it.id.hashCode().toLong() }) { activity ->
+                val active = activeId == activity.id
+                val fg = SolidColor(Color(TimeRules.foregroundColor(activity.colorArgb)))
+                Box(GlanceModifier.fillMaxWidth().padding(3.dp)) {
+                    Column(
+                        GlanceModifier.fillMaxWidth().height(52.dp).background(SolidColor(Color(activity.colorArgb)))
                             .cornerRadius(18.dp)
                             .clickable(actionRunCallback<StartTrackerAction>(actionParametersOf(ActivityIdKey to activity.id)))
-                            .padding(18.dp)
+                            .padding(horizontal = 14.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = if (activeId == activity.id) "✓ ${activity.title}" else activity.title,
-                            style = TextStyle(color = ColorProvider(Color(TimeRules.foregroundColor(activity.colorArgb))), fontSize = 18.sp, fontWeight = FontWeight.Bold),
-                            maxLines = Int.MAX_VALUE
+                            text = if (active) "✓ ${activity.title}" else activity.title,
+                            style = TextStyle(color = fg, fontSize = 14.sp, fontWeight = if (active) FontWeight.Bold else FontWeight.Medium),
+                            maxLines = 1
                         )
                     }
                 }

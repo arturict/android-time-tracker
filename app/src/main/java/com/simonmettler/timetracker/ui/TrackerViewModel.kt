@@ -5,8 +5,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.simonmettler.timetracker.TrackerApplication
+import com.simonmettler.timetracker.data.CalendarEntry
 import com.simonmettler.timetracker.data.TimeInterval
 import com.simonmettler.timetracker.model.Boundary
+import com.simonmettler.timetracker.model.Insights
+import com.simonmettler.timetracker.model.Period
 import com.simonmettler.timetracker.model.TimeRules
 import java.time.LocalDate
 import java.time.ZoneId
@@ -29,13 +32,36 @@ class TrackerViewModel(application: Application, private val savedState: SavedSt
         val (from, to) = TimeRules.dayWindow(day, zone)
         repository.window(from, to)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(0), emptyList())
+    // Home always summarizes the current day, independent of the calendar's selected day.
+    private val todayState = MutableStateFlow(LocalDate.now())
+    val today = todayState.asStateFlow()
+    val todayEntries = combine(today, zone, ::Pair).flatMapLatest { (day, zone) ->
+        val (from, to) = TimeRules.dayWindow(day, zone)
+        repository.window(from, to)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+    // Insights load the selected period plus the one before it, for the comparison.
+    private val periodState = MutableStateFlow(Period.Week)
+    val period = periodState.asStateFlow()
+    private val anchorState = MutableStateFlow(LocalDate.now())
+    val anchor = anchorState.asStateFlow()
+    val insightEntries = combine(period, anchor, zone, ::Triple).flatMapLatest { (period, anchor, zone) ->
+        val range = Insights.range(period, anchor)
+        val from = Insights.window(Insights.previous(period, range), zone).first
+        repository.window(from, Insights.window(range, zone).second)
+    }.stateIn<List<CalendarEntry>?>(viewModelScope, SharingStarted.WhileSubscribed(5_000), null) // null until the first query answers
+    fun setPeriod(value: Period) { periodState.value = value }
+    fun shiftPeriod(steps: Long) { anchorState.value = Insights.shift(periodState.value, anchorState.value, steps) }
+    fun resetPeriod() { anchorState.value = LocalDate.now(zoneState.value) }
     private val messages = Channel<String>(Channel.BUFFERED)
     val feedback = messages.receiveAsFlow()
 
     fun setDay(value: LocalDate) { dayState.value = value; savedState["day"] = value.toString() }
     fun setZone(value: ZoneId) { followDeviceZone = false; zoneState.value = value }
     fun followDevice() { followDeviceZone = true; refreshZone() }
-    fun refreshZone() { if (followDeviceZone) zoneState.value = ZoneId.systemDefault() }
+    fun refreshZone() {
+        if (followDeviceZone) zoneState.value = ZoneId.systemDefault()
+        todayState.value = LocalDate.now(zoneState.value)
+    }
 
     fun start(id: String) = perform { "${repository.startActivity(id)} tracker is set" }
     fun save(id: String?, title: String, color: Int, done: () -> Unit) = perform(done) {

@@ -39,12 +39,12 @@ class TrackerUiTest {
         ui.waitUntil(10_000) { ui.onAllNodesWithContentDescription("Work. Start new interval.").fetchSemanticsNodes().isNotEmpty() }
         ui.onNodeWithContentDescription("Work. Start new interval.").performClick()
         ui.waitUntil(10_000) { runBlocking { app.database.dao().active() != null } }
-        ui.onNodeWithText("Tracking Work").assertIsDisplayed()
+        ui.onNodeWithContentDescription("Tracking Work", substring = true).assertIsDisplayed()
         val saved = runBlocking { app.repository.widgetSnapshot() }.first.single()
         assertEquals(0xFFFFD540.toInt(), saved.colorArgb)
         ui.onNodeWithText("Calendar").performClick()
         ui.onNodeWithText("Home").performClick()
-        ui.onNodeWithText("Tracking Work").assertIsDisplayed()
+        ui.onNodeWithContentDescription("Tracking Work", substring = true).assertIsDisplayed()
     }
 
     @Test fun calendarEditPersistsChangedStart() {
