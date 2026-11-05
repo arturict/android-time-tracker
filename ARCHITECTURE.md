@@ -1,6 +1,6 @@
 # Android Time Tracker — Architecture
 
-Status: proposed architecture, ready for implementation. This document and its diagram describe the app; they are not an implemented or benchmarked application.
+Status: implemented in this repository. This document and its diagram record the design. See README.md for completed validation and remaining release checks; battery consumption has not been benchmarked.
 
 ## 1. Main decision
 
@@ -230,7 +230,7 @@ If automatic synchronization is later required, add a transactional change log/o
 4. **Widget:** verify buttons-only interaction without launching the app, all-button reachability, multiple widget instances, resizes, stale activity IDs, process death, and reconstruction after restart. Test at least the launchers/devices intended for support, including normal Android stopped-app limitations.
 5. **Release validation:** test Room migrations with existing data, inspect permissions and backup policy, and measure action latency plus idle background work on real hardware.
 
-These are implementation acceptance criteria, not tests already run. Deliver the core tracker and widget before starting PC/LAN features.
+Completed automated checks and remaining release checks are recorded in README.md. PC/LAN features remain deferred.
 
 ## References
 

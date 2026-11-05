@@ -75,4 +75,6 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) and the [architecture image](architecture
 
 ## Validation limits
 
-Automated checks do not establish a measured battery saving. Physical-device idle comparisons, additional OEM launchers, font scaling, and both Android navigation modes require release validation. There is no production upgrade migration yet because this is schema version 1; future versions must provide explicit migrations without deleting existing data.
+Validated on 2026-11-05: debug and unsigned release builds, Android lint (zero errors), 10 unit tests, and 17 instrumentation tests passed. Device tests ran on an Android 15 / API 35 Pixel 2 emulator. They include actual SQLite constraints and rollback, process/database recreation, calendar edits, and a real Android widget host delivering repeated PendingIntent taps. Screenshots were reviewed. The long dashboard was also tested with three-button navigation and 130% text size, in addition to the full suite's gesture-navigation configuration.
+
+Automated checks do not establish a measured battery saving. Physical-device idle comparisons, Android 8–14 runtime compatibility, and additional OEM launchers still require release validation. The native widget-host test requires API 29 or later; the app itself targets API 26 or later. There is no production upgrade migration yet because this is schema version 1; future versions must provide explicit migrations without deleting existing data.
