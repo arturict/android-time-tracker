@@ -149,6 +149,12 @@ class RepositoryTest {
         StartTrackerAction().onAction(context, AppWidgetId(1), actionParametersOf(ActivityIdKey to id))
         assertEquals(id, app.database.dao().active()!!.activityId)
     }
+    @Test fun appHasNoInternetOrBackupAccess() {
+        val permissions = context.packageManager.getPackageInfo(context.packageName, android.content.pm.PackageManager.GET_PERMISSIONS).requestedPermissions.orEmpty()
+        assertFalse(permissions.contains("android.permission.INTERNET"))
+        assertFalse(permissions.contains("android.permission.FOREGROUND_SERVICE"))
+        assertEquals(0, context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_ALLOW_BACKUP)
+    }
 }
 
 private class MutableClock : Clock() {

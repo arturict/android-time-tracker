@@ -39,9 +39,10 @@ class TrackerWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val repository = (context.applicationContext as TrackerApplication).repository
         val initial = repository.widgetSnapshot()
+        val activeIds = repository.active.map { it?.activityId }
         provideContent {
             val activities by repository.activities.collectAsState(initial = initial.first)
-            val activeId by repository.active.map { it?.activityId }.collectAsState(initial = initial.second)
+            val activeId by activeIds.collectAsState(initial = initial.second)
             WidgetButtons(activities.filterNot { it.isArchived }, activeId)
         }
     }
@@ -65,7 +66,7 @@ private fun WidgetButtons(activities: List<TrackerActivity>, activeId: String?) 
                         Text(
                             text = if (activeId == activity.id) "✓ ${activity.title}" else activity.title,
                             style = TextStyle(color = ColorProvider(Color(TimeRules.foregroundColor(activity.colorArgb))), fontSize = 18.sp, fontWeight = FontWeight.Bold),
-                            maxLines = 4
+                            maxLines = Int.MAX_VALUE
                         )
                     }
                 }

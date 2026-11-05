@@ -52,13 +52,13 @@ chmod +x gradlew
 
 The installable development APK is `app/build/outputs/apk/debug/app-debug.apk`. It uses the development signing key. Release builds are deliberately unsigned; configure your own private signing configuration for distribution. Do not commit signing credentials.
 
-With an emulator or test device connected:
+Use a disposable emulator or a dedicated test device for instrumentation. Gradle's test installer can uninstall the app. With that test device connected:
 
 ```powershell
 .\gradlew.bat connectedDebugAndroidTest
 ```
 
-The CI definition in `ci/android.yml` runs unit tests, Android lint, debug/release builds, and SQLite/UI/widget instrumentation tests on an Android emulator. A successful build uploads the debug APK as a workflow artifact. Instrumentation screenshots contain only synthetic test activities. To enable CI, copy this file to `.github/workflows/android.yml` using a GitHub identity authorized to upload workflows. It is initially a template because the publishing token lacks GitHub's `workflow` scope.
+CI is intentionally disabled. The optional definition in `ci/android.yml` runs unit tests, Android lint, debug/release builds, and SQLite/UI/widget instrumentation tests on an Android emulator. A successful build uploads the debug APK as a workflow artifact. Instrumentation screenshots contain only synthetic test activities. To enable CI, copy this file to `.github/workflows/android.yml` using a GitHub identity authorized to upload workflows.
 
 ## Project layout
 

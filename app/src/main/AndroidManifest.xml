@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- No INTERNET, location, storage, foreground service or alarm permission. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <!-- Glance uses short WorkManager jobs; no foreground worker is used. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
     <application
         android:name=".TrackerApplication"
         android:allowBackup="false"
@@ -10,6 +11,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeTracker">
+        <!-- This is a merger removal marker, never an instantiated component. -->
+        <service android:name="androidx.work.impl.foreground.SystemForegroundService" tools:node="remove" tools:ignore="MissingClass" />
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

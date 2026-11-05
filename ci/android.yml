@@ -53,12 +53,12 @@ jobs:
           disable-animations: true
           script: |
             chmod +x gradlew
-            ./gradlew connectedDebugAndroidTest --no-daemon
+            ./gradlew connectedDebugAndroidTest --no-daemon -Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true
       - name: Collect synthetic UI screenshots
         if: always()
         run: |
           mkdir -p qa-screenshots
-          for name in dashboard last-button calendar; do
+          for name in dashboard last-button calendar widget; do
             adb exec-out run-as com.simonmettler.timetracker cat cache/qa/$name.png > qa-screenshots/$name.png || true
           done
       - uses: actions/upload-artifact@v4
